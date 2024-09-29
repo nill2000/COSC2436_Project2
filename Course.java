@@ -12,4 +12,8 @@ public class Course {
 		this.capacity = capacity;
 		this.enrolledStudents = enrolledStudents;
 	}
+
+	public static void main(String[] args){
+		System.out.println("Course Class Sucess");
+	}
 }

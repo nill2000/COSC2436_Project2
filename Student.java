@@ -10,4 +10,8 @@ public class Student {
 		this.age = age;
 		this.major = major;
 	};
+
+	public static void main(String[] args){
+		System.out.println("Student Class Sucess");
+	}
 }
