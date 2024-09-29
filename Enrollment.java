@@ -4,37 +4,98 @@ import java.util.Scanner;
 
 public class Enrollment {
 	Course courseObj = new Course(0, null, null ,0, 0);
-	Student studentObj = new Student(null, null, 0, null);
-	Scanner scannerObj = new Scanner(System.in);
-	HashMap<Integer, Integer> hashMapObj = new HashMap<>();
+	static Student studentObj = new Student(0, null, 0, null);
+	static Scanner scannerObj = new Scanner(System.in);
+	static HashMap<Integer, Student> studentHashObj = new HashMap<>();
+	static HashMap<Integer, Course> courseHashObj = new HashMap<>();
 	PriorityQueue<Integer> priorityQueueObj = new PriorityQueue<>();
 
 	static void addStudent(){
+		System.out.println("Student ID (4 Digits):");
+		int stuID = scannerObj.nextInt();
 
+		System.out.println("Student Name:");
+		String stuName = scannerObj.next();
+
+		System.out.println("Student Age (18-40):");
+		int stuAge = scannerObj.nextInt();
+
+		System.out.println("Student Major:");
+		String stuMajor = scannerObj.next();
+
+		Student studentObj = new Student(stuID, stuName, stuAge, stuMajor);
+
+		studentHashObj.put(stuID, studentObj);
 	}
+
 	static void enrollStudent(){
-
-	}
-	static void dropStudent(){
-
-	}
-	static void displayStudent(){
-
-	}
-	static void addCourse(){
-
-	}
-	static void deleteCourse(){
-
-	}
-	static void modifyCourse(){
-
-	}
-	static void displayCourse(){
-
-	}
-	static void displayEnrollStatus(){
+		System.out.println("Which Student? (Type ID)");
+		int stuID = scannerObj.nextInt();
 		
+		System.out.println("Which Course to Enroll? (Type ID)");
+		int courID = scannerObj.nextInt();
+	}
+
+	static void dropStudent(){
+		System.out.println("Which Student? (Type ID)");
+		int stuID = scannerObj.nextInt();
+
+		System.out.println("Which Course to Drop? (Type ID)");
+		int courID = scannerObj.nextInt();
+	}
+
+	static void displayStudent(){
+		System.out.println("Which Student (Type ID)?");
+	}
+
+	static void displayAllStudents(){
+
+	}
+
+	static void addCourse(){
+		System.out.println("Course ID:");
+		int courID = scannerObj.nextInt();
+
+		System.out.println("Course Name:");
+		String courName = scannerObj.next();
+
+		System.out.println("Instructor Name:");
+		String courInstructor = scannerObj.next();
+	
+		System.out.println("Course Capacity (5-10 For the Scope of Program)");
+		int courCapacity = scannerObj.nextInt();
+
+		System.out.println("");
+
+		Course courseObj = new Course(courID, courName, courInstructor, courCapacity, 0);
+		courseHashObj.put(courID, courseObj);
+	}
+
+	static void deleteCourse(){
+		System.out.println("Which Course to Delete? (Type ID)");
+		int courID = scannerObj.nextInt();
+	}
+
+	static void modifyCourse(){
+		System.out.println("Which Course to Modify? (Type ID)");
+		int courID = scannerObj.nextInt();
+
+	}
+
+	static void displayCourse(){
+		System.out.println("Which Course to Display? (Type ID)");
+		int courID = scannerObj.nextInt();
+
+	}
+
+	static void displayEnrollStatus(){
+		System.out.println("Which Course to Check Availability? (Type ID)");
+		int courID = scannerObj.nextInt();
+
+	}
+
+	static void displayAllCourses(){
+
 	}
 
 	public void menuList(){
@@ -70,7 +131,6 @@ public class Enrollment {
 				System.out.println("Invalid Input \nExiting Program");
 				System.exit(0);
 		}
-
 	}
 
 	public static void main(String[] args){

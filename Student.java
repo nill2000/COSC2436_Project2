@@ -1,10 +1,10 @@
 public class Student {
-	String studentID;
+	int studentID;
 	String name;
 	int age;
 	String major;
 
-	public Student(String studentID, String name, int age, String major) {
+	public Student(int studentID, String name, int age, String major) {
 		this.studentID = studentID;
 		this.name = name;
 		this.age = age;
