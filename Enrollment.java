@@ -10,6 +10,7 @@ public class Enrollment {
 	static HashMap<Integer, Course> courseHashObj = new HashMap<>();
 	PriorityQueue<Integer> priorityQueueObj = new PriorityQueue<>();
 
+	//COMPLETE
 	static void addStudent(){
 		System.out.println("Student ID (4 Digits):");
 		int stuID = scannerObj.nextInt();
@@ -31,9 +32,13 @@ public class Enrollment {
 	static void enrollStudent(){
 		System.out.println("Which Student? (Type ID)");
 		int stuID = scannerObj.nextInt();
-		
+
 		System.out.println("Which Course to Enroll? (Type ID)");
 		int courID = scannerObj.nextInt();
+
+		studentHashObj.get(stuID);
+		courseHashObj.get(courID);
+
 	}
 
 	static void dropStudent(){
@@ -42,16 +47,24 @@ public class Enrollment {
 
 		System.out.println("Which Course to Drop? (Type ID)");
 		int courID = scannerObj.nextInt();
+
+		studentHashObj.get(stuID);
+		courseHashObj.get(courID);
 	}
 
 	static void displayStudent(){
 		System.out.println("Which Student (Type ID)?");
+		int stuID = scannerObj.nextInt();
+		studentHashObj.get(stuID);
 	}
 
 	static void displayAllStudents(){
-
+		for(Student _students: studentHashObj.values()){
+			System.out.println(_students.getStudentDetails());
+		}
 	}
 
+	//COMPLETE
 	static void addCourse(){
 		System.out.println("Course ID:");
 		int courID = scannerObj.nextInt();
@@ -74,28 +87,42 @@ public class Enrollment {
 	static void deleteCourse(){
 		System.out.println("Which Course to Delete? (Type ID)");
 		int courID = scannerObj.nextInt();
+		courseHashObj.remove(courID);
 	}
 
 	static void modifyCourse(){
 		System.out.println("Which Course to Modify? (Type ID)");
 		int courID = scannerObj.nextInt();
-
+		courseHashObj.get(courID);
 	}
 
 	static void displayCourse(){
 		System.out.println("Which Course to Display? (Type ID)");
 		int courID = scannerObj.nextInt();
+		courseHashObj.get(courID);
 
 	}
 
 	static void displayEnrollStatus(){
 		System.out.println("Which Course to Check Availability? (Type ID)");
 		int courID = scannerObj.nextInt();
+		Course curCourse = courseHashObj.get(courID);
+		System.out.println("Course Name: " + curCourse.courseName);
+		System.out.println("Course Capacity: " + curCourse.capacity);
+		System.out.println("Enrollment Amount: " + curCourse.enrolledStudents);
+
+		if(curCourse.enrolledStudents == curCourse.capacity){
+			System.out.println("Enrollment Status is Closed");
+		} else {
+			System.out.println("Enrollment Status is Open");
+		}
 
 	}
 
 	static void displayAllCourses(){
-
+		for(Course _courses: courseHashObj.values()){
+			System.out.println(_courses.getCourseDetails());
+		}
 	}
 
 	public void menuList(){
