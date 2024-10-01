@@ -29,6 +29,12 @@ public class Course {
 	void setEnrolled(int enrolledStudents){
 		this.enrolledStudents = enrolledStudents;
 	}
+	void increaseCount(){
+		this.enrolledStudents += 1;
+	}
+	void removeCount(){
+		this.enrolledStudents -= 1;
+	}
 
 	//Getters to Review Details
 	int getCourseID(){
