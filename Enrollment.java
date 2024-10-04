@@ -16,14 +16,19 @@ public class Enrollment {
 	static void addStudent(){
 		System.out.println("Student ID (4 Digits and Zero can't be first digit):");
 		int stuID = scannerObj.nextInt();
-		while(true){ //Checks if input is within range
-			if (stuID >= 1000 && stuID <= 9999){
-				break;
-			} else {
-				System.out.println("Invalid Input. 4 Digits & Zero can't be first:");
-				stuID = scannerObj.nextInt();
-			}
-		}
+
+		//Checks if ID is already in use and if input is in range
+		// while(true){
+		// 	if((studentHashObj.containsKey(stuID)) || (stuID < 1000 && stuID > 9999)){
+		// 	System.out.println("ID is either an invalid input or in use. Try Again");
+		// 	System.out.println("Student ID (Zero Can't be First and Only 4 Digits): ");
+		// 	stuID = scannerObj.nextInt();	
+		// } else {
+		// 	break;
+		// 	}
+		// }
+
+		stuID = checkStudentID_InUseAndRange(stuID);
 
 		scannerObj.nextLine();
 
@@ -62,9 +67,11 @@ public class Enrollment {
 		System.out.println("Which Student? (Type ID)");
 		int stuID = scannerObj.nextInt();
 
-		stuID = checkStudentID(stuID);
+		//Checks if Student ID is in Hash
+		stuID = checkStudentIDinHash(stuID);
 
-		if(stuID == -1){ //Exit Method and Back to Menu List
+		//Exit Method and Back to Menu List
+		if(stuID == -1){
 			System.out.println("Exiting enrollStudent Method...");
 			return;
 		}
@@ -73,9 +80,11 @@ public class Enrollment {
 		System.out.println("Which Course to Enroll? (Type ID)");
 		int courID = scannerObj.nextInt();
 
-		courID = checkCourseID(courID);
+		//Checks if CourseID is in Hash
+		courID = checkCourseIDinHash(courID);
 
-		if(courID == -1){ //Exit Method and Back to Menu List
+		//Exit Method and Back to Menu List
+		if(courID == -1){ 
 			System.out.println("Exiting enrollStudent Method...");
 			return; 
 		}
@@ -102,9 +111,11 @@ public class Enrollment {
 		System.out.println("Which Student? (Type ID)");
 		int stuID = scannerObj.nextInt();
 
-		stuID = checkStudentID(stuID);
-
-		if(stuID == -1){ //Exit Method and Back to Menu List
+		//Checks if Student ID is in Hash
+		stuID = checkStudentIDinHash(stuID);
+        
+		//Exit Method and Back to Menu List
+		if(stuID == -1){ 
 			System.out.println("Exiting enrollStudent Method...");
 			return;
 		}
@@ -112,9 +123,11 @@ public class Enrollment {
 		System.out.println("Which Course to Drop? (Type ID)");
 		int courID = scannerObj.nextInt();
 
-		courID = checkCourseID(courID);
-
-		if(courID == -1){ //Exit Method and Back to Menu List
+		//Checks if courID is in HashMap
+		courID = checkCourseIDinHash(courID);
+        
+		//Exit Method and Back to Menu List
+		if(courID == -1){ 
 			System.out.println("Exiting enrollStudent Method...");
 			return; 
 		}
@@ -134,12 +147,13 @@ public class Enrollment {
 		}
 	}
 
-	//Gets the student ID from hash and display their details. COMPLETE
+	//COMPLETE
 	static void displayStudent(){
 		System.out.println("Which Student (Type ID)?");
 		int stuID = scannerObj.nextInt();
 
-		stuID = checkStudentID(stuID);
+		//Checks if Student ID is in Hash
+		stuID = checkStudentIDinHash(stuID);
 
 		if(stuID == -1){ //Exit Method and Back to Menu List
 			System.out.println("Exiting displayStudent Method...");
@@ -165,14 +179,9 @@ public class Enrollment {
 		System.out.println("Course ID (Four Digits & Zero cant be first):");
 		int courID = scannerObj.nextInt();
 
-		while(true){ //Checks if input is within range
-			if (courID >= 1000 && courID <= 9999){
-				break;
-			} else {
-				System.out.println("Invalid Input. 4 Digits & Zero can't be first:");
-				courID = scannerObj.nextInt();
-			}
-		}
+		//Check ID Availability
+		//CHecks if ID is already in use or out of range
+		courID = checkCourseID_InUseAndRange(courID);
 
 		scannerObj.nextLine();
 
@@ -185,6 +194,16 @@ public class Enrollment {
 		System.out.println("Course Capacity (5-10 For Simplicity)");
 		int courCapacity = scannerObj.nextInt();
 
+		while(true){
+			if(courCapacity < 5 || courCapacity > 10){
+				System.out.println("Invalid Input. Try Again.");
+				System.out.println("Course Capacity (5-10 For Simplicity)");
+				courCapacity = scannerObj.nextInt();
+			} else {
+				break;
+			}
+		}
+
 		System.out.println("");
 
 		Course courseObj = new Course(courID, courName, courInstructor, courCapacity, 0);
@@ -192,13 +211,16 @@ public class Enrollment {
 	}
 
 	//COMPLETE
+	//Loop through every Student's enrolled course and remove from their list
 	static void deleteCourse(){
 		System.out.println("Which Course to Delete? (Type ID)");
 		int courID = scannerObj.nextInt();
 
-		courID = checkCourseID(courID);
+		//Checks if courID is in HashMap
+		courID = checkCourseIDinHash(courID);
 
-		if(courID == -1){ //Exit Method and Back to Menu List
+		//Exit Method and Back to Menu List
+		if(courID == -1){ 
 			System.out.println("Exiting deleteCourse Method...");
 			return; 
 		}
@@ -213,9 +235,11 @@ public class Enrollment {
 		int courID = scannerObj.nextInt();
 		Course curCourse = courseHashObj.get(courID);
 
-		courID = checkCourseID(courID);
+		//Checks if courID - the ID to modify - is in HashMap
+		courID = checkCourseIDinHash(courID); 
 
-		if(courID == -1){ //Exit Method and Back to Menu List
+		//Exit Method and Back to Menu List
+		if(courID == -1){ 
 			System.out.println("Exiting modifyCourse Method...");
 			return; 
 		}
@@ -226,12 +250,19 @@ public class Enrollment {
 		System.out.println("Course ID: ");
 		int changeCourID = scannerObj.nextInt();
 
-		while(true){ //Checks if input is within range
-			if (changeCourID >= 1000 && changeCourID <= 9999){
-				break;
-			} else {
-				System.out.println("Invalid Input. 4 Digits & Zero can't be first:");
-				changeCourID = scannerObj.nextInt();
+		//Check ID Availability
+		// If HashMap contains the changedID or if input is out of range, ask again
+		while(true){
+			if(courseHashObj.containsKey(changeCourID) || (changeCourID < 1000 && changeCourID > 9999)){
+			System.out.println("ID is invalid. Either ID is in use or invalid input. Try Again");
+			System.out.println("Course ID: ");
+			changeCourID = scannerObj.nextInt();	
+		} else {
+			System.out.println("ID has been Changed");
+			courseHashObj.put(changeCourID, curCourse); //Create a hash with the same course but new ID
+			curCourse.setCourseID(changeCourID); //Use a setter to change the course ID
+			courseHashObj.remove(courID); //Remove the hash with the old ID
+			break;
 			}
 		}
 
@@ -244,29 +275,14 @@ public class Enrollment {
 		System.out.println("Course Capacity: ");
 		int changeCourCapacity = scannerObj.nextInt();
 
-		//Check ID Availability
-		while(true){
-			if(courseHashObj.containsKey(changeCourID)){
-			System.out.println("ID is in use; Try another");
-			System.out.println("Course ID: ");
-			changeCourID = scannerObj.nextInt();	
-		} else {
-			System.out.println("ID has been Changed");
-			courseHashObj.put(changeCourID, curCourse);
-			curCourse.setCourseID(changeCourID);
-			courseHashObj.remove(courID);
-			break;
-			}
-		}
-
 		//Check Course Capacity
 		while(true){
 			if(changeCourCapacity < curCourse.enrolledStudents){
 			System.out.println("Cannot reduce capacity because of the amount of students already enrolled");
-			System.out.println("Try Again. Course Capacity: ");
+			System.out.println("Try Again. Course Capacity (5-10): ");
 		    changeCourCapacity = scannerObj.nextInt();
 		} else {
-			System.out.println("Capacity has been changed");
+			System.out.println("Capacity has been set");
 			curCourse.setCapacity(changeCourCapacity);
 			break;
 			}
@@ -281,9 +297,10 @@ public class Enrollment {
 		System.out.println("Which Course to Display? (Type ID)");
 		int courID = scannerObj.nextInt();
 
-		courID = checkCourseID(courID);
+		courID = checkCourseIDinHash(courID);
 
-		if(courID == -1){ //Exit Method and Back to Menu List
+		//Exit Method and Back to Menu List
+		if(courID == -1){ 
 			System.out.println("Exiting displayCourse Method...");
 			return; 
 		}
@@ -297,9 +314,10 @@ public class Enrollment {
 		System.out.println("Which Course to Check Availability? (Type ID)");
 		int courID = scannerObj.nextInt();
 
-		courID = checkCourseID(courID);
+		courID = checkCourseIDinHash(courID);
 
-		if(courID == -1){ //Exit Method and Back to Menu List
+		//Exit Method and Back to Menu List
+		if(courID == -1){ 
 			System.out.println("Exiting enrollStatus Method...");
 			return;
 		}
@@ -330,7 +348,7 @@ public class Enrollment {
 	}
 
 	//Checks if studentID is in System
-	static int checkStudentID(int stuIDParams){
+	static int checkStudentIDinHash(int stuIDParams){
 		while(!studentHashObj.containsKey(stuIDParams)){
 			if(stuIDParams == -1){
 				return stuIDParams;
@@ -342,7 +360,7 @@ public class Enrollment {
 	}
 
 	//Checks if CourseID is in System
-	static int checkCourseID(int courIDParams){
+	static int checkCourseIDinHash(int courIDParams){
 		while(!courseHashObj.containsKey(courIDParams)){
 			if(courIDParams == -1){
 				return courIDParams;
@@ -351,6 +369,42 @@ public class Enrollment {
 			courIDParams = scannerObj.nextInt();
 		}
 		return courIDParams;
+	}
+
+	//Checks if student ID is already in use and if input is within range
+	static int checkStudentID_InUseAndRange(int stuIDParams){
+		while(true){
+			if(studentHashObj.containsKey(stuIDParams)){
+			System.out.println("ID is in use. Try Again");
+			System.out.println("Student ID (Zero Can't be First and Only 4 Digits): ");
+			stuIDParams = scannerObj.nextInt();	
+		} else if (stuIDParams < 1000 || stuIDParams > 9999) {
+			System.out.println("ID is an invalid input. Try Again");
+			System.out.println("Student ID (Zero Can't be First and Only 4 Digits): ");
+			stuIDParams = scannerObj.nextInt();	
+		}
+		else {
+			return stuIDParams;
+			}
+		}
+	}
+
+	//Checks if course ID is already in use and if input is within range
+	static int checkCourseID_InUseAndRange(int courIDParams){
+		while(true){
+			if(courseHashObj.containsKey(courIDParams)){
+			System.out.println("ID is in use. Try Again");
+			System.out.println("Course ID (Zero Can't be First and Only 4 Digits): ");
+			courIDParams = scannerObj.nextInt();	
+		} else if (courIDParams < 1000 || courIDParams > 9999){
+			System.out.println("ID is an invalid input. Try Again");
+			System.out.println("Course ID (Zero Can't be First and Only 4 Digits): ");
+			courIDParams = scannerObj.nextInt();	
+		}
+		else {
+			return courIDParams;
+			}
+		}
 	}
 
 	//MAYBE COMPLETE
@@ -399,6 +453,7 @@ public class Enrollment {
 				System.out.println("Invalid Input \nExiting Program");
 				System.exit(0);
 		}
+		System.out.println();
 	}
 
 	public static void main(String[] args){
