@@ -1,8 +1,11 @@
+import java.util.ArrayList;
+
 public class Student {
 	int studentID;
 	String name;
 	int age;
 	String major;
+	ArrayList<String> enrolledCourses = new ArrayList<>();
 
 	public Student(int studentID, String name, int age, String major) {
 		this.studentID = studentID;
@@ -28,7 +31,7 @@ public class Student {
 	}
 
 	String getStudentDetails(){
-		return String.format("ID: %s, Name: %s, Age: %d, Major: %s", this.studentID, this.name, this.age, this.major);
+		return String.format("ID: %s, Name: %s, Age: %d, Major: %s, Courses: %s", this.studentID, this.name, this.age, this.major, enrolledCourses.toString());
 	}
 	public static void main(String[] args){
 		System.out.println("Student Class Sucess");

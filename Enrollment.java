@@ -8,39 +8,82 @@ public class Enrollment {
 	static Scanner scannerObj = new Scanner(System.in);
 	static HashMap<Integer, Student> studentHashObj = new HashMap<>();
 	static HashMap<Integer, Course> courseHashObj = new HashMap<>();
-	PriorityQueue<Integer> priorityQueueObj = new PriorityQueue<>();
+	static PriorityQueue<Integer> priorityQueueObj = new PriorityQueue<>();
+
+	//Program needs to check if id is valid when entered for all cases
 
 	//COMPLETE
 	static void addStudent(){
-		System.out.println("Student ID (4 Digits):");
+		System.out.println("Student ID (4 Digits and Zero can't be first digit):");
 		int stuID = scannerObj.nextInt();
+		while(true){ //Checks if input is within range
+			if (stuID >= 1000 && stuID <= 9999){
+				break;
+			} else {
+				System.out.println("Invalid Input. 4 Digits & Zero can't be first:");
+				stuID = scannerObj.nextInt();
+			}
+		}
 
+		scannerObj.nextLine();
+
+		//Gets Student Name
 		System.out.println("Student Name:");
-		String stuName = scannerObj.next();
+		String stuName = scannerObj.nextLine();
 
-		System.out.println("Student Age (18-40):");
+		//Gets Student Age within 18-40
+		System.out.println("Student Age (18-40 for Simplicity) :");
 		int stuAge = scannerObj.nextInt();
+		while(true){ //Checks if input is in range
+			if (stuAge >= 18 & stuAge <= 40){
+				break;
+			} else {
+				System.out.println("Invalid Input. Student Age (18-40):");
+				stuAge = scannerObj.nextInt();
+			}
+		}
 
+		scannerObj.nextLine();
+
+		//Gets Student Major
 		System.out.println("Student Major:");
 		String stuMajor = scannerObj.nextLine();
 
+		//Creates the Student object with given info
 		Student studentObj = new Student(stuID, stuName, stuAge, stuMajor);
 
+		//Saves the Student into a Hash with ID as their key
 		studentHashObj.put(stuID, studentObj);
 	}
 
-	//IN PROGRESS
+	//COMPLETE - Needs to check if ID is available
 	static void enrollStudent(){
+		//Searches for student ID
 		System.out.println("Which Student? (Type ID)");
 		int stuID = scannerObj.nextInt();
 
+		stuID = checkStudentID(stuID);
+
+		if(stuID == -1){ //Exit Method and Back to Menu List
+			System.out.println("Exiting enrollStudent Method...");
+			return;
+		}
+
+		//Searches for Course ID
 		System.out.println("Which Course to Enroll? (Type ID)");
 		int courID = scannerObj.nextInt();
+
+		courID = checkCourseID(courID);
+
+		if(courID == -1){ //Exit Method and Back to Menu List
+			System.out.println("Exiting enrollStudent Method...");
+			return; 
+		}
 
 		Student curStudent = studentHashObj.get(stuID);
 		Course curCourse = courseHashObj.get(courID);
 
-		//Check if Capacity is available. If so, add student, and if not, dont add
+		//Check if Capacity is available. If so, add student, and if not, dont add.
 		//Increase enrollment by 1 count
 		//Save the enrolled class into the students list somewhere
 		if(curCourse.enrolledStudents == curCourse.capacity){
@@ -50,16 +93,31 @@ public class Enrollment {
 			System.out.println(curStudent.getName() + " has been enrolled into");
 			System.out.println("Course ID: " + curCourse.getCourseID());
 			System.out.println("Course Name: " + curCourse.getCourseName());
+			curStudent.enrolledCourses.add(curCourse.courseName);
 		}
 	}
 
-	//IN PROGRESS
+	//COMPLETE Needs to check if ID is available
 	static void dropStudent(){
 		System.out.println("Which Student? (Type ID)");
 		int stuID = scannerObj.nextInt();
 
+		stuID = checkStudentID(stuID);
+
+		if(stuID == -1){ //Exit Method and Back to Menu List
+			System.out.println("Exiting enrollStudent Method...");
+			return;
+		}
+
 		System.out.println("Which Course to Drop? (Type ID)");
 		int courID = scannerObj.nextInt();
+
+		courID = checkCourseID(courID);
+
+		if(courID == -1){ //Exit Method and Back to Menu List
+			System.out.println("Exiting enrollStudent Method...");
+			return; 
+		}
 
 		Student curStudent = studentHashObj.get(stuID);
 		Course curCourse = courseHashObj.get(courID);
@@ -72,6 +130,7 @@ public class Enrollment {
 			System.out.println(curStudent.getName() + " has been dropped from");
 			System.out.println("Course ID: " + curCourse.getCourseID());
 			System.out.println("Course Name: " + curCourse.getCourseName());
+			curStudent.enrolledCourses.remove(curCourse.courseName);
 		}
 	}
 
@@ -79,27 +138,51 @@ public class Enrollment {
 	static void displayStudent(){
 		System.out.println("Which Student (Type ID)?");
 		int stuID = scannerObj.nextInt();
+
+		stuID = checkStudentID(stuID);
+
+		if(stuID == -1){ //Exit Method and Back to Menu List
+			System.out.println("Exiting displayStudent Method...");
+			return;
+		}
+
 		System.out.println(studentHashObj.get(stuID).getStudentDetails());
 	}
 
+	//COMPLETE
 	static void displayAllStudents(){
-		for(Student _students: studentHashObj.values()){
+		if(studentHashObj.isEmpty()){
+			System.out.println("No Students in System");
+		} else {
+			for(Student _students: studentHashObj.values()){
 			System.out.println(_students.getStudentDetails());
+			}
 		}
 	}
 
 	//COMPLETE
 	static void addCourse(){
-		System.out.println("Course ID:");
+		System.out.println("Course ID (Four Digits & Zero cant be first):");
 		int courID = scannerObj.nextInt();
 
+		while(true){ //Checks if input is within range
+			if (courID >= 1000 && courID <= 9999){
+				break;
+			} else {
+				System.out.println("Invalid Input. 4 Digits & Zero can't be first:");
+				courID = scannerObj.nextInt();
+			}
+		}
+
+		scannerObj.nextLine();
+
 		System.out.println("Course Name:");
-		String courName = scannerObj.next();
+		String courName = scannerObj.nextLine();
 
 		System.out.println("Instructor Name:");
-		String courInstructor = scannerObj.next();
+		String courInstructor = scannerObj.nextLine();
 	
-		System.out.println("Course Capacity (5-10 For the Scope of Program)");
+		System.out.println("Course Capacity (5-10 For Simplicity)");
 		int courCapacity = scannerObj.nextInt();
 
 		System.out.println("");
@@ -112,14 +195,30 @@ public class Enrollment {
 	static void deleteCourse(){
 		System.out.println("Which Course to Delete? (Type ID)");
 		int courID = scannerObj.nextInt();
+
+		courID = checkCourseID(courID);
+
+		if(courID == -1){ //Exit Method and Back to Menu List
+			System.out.println("Exiting deleteCourse Method...");
+			return; 
+		}
+
 		System.out.println(courseHashObj.remove(courID).getCourseDetails() + " has been removed");
 	}
 
 	//MAYBE COMPLETE
+	//Check ID Availability and Range
 	static void modifyCourse(){
 		System.out.println("Which Course to Modify? (Type ID)");
 		int courID = scannerObj.nextInt();
 		Course curCourse = courseHashObj.get(courID);
+
+		courID = checkCourseID(courID);
+
+		if(courID == -1){ //Exit Method and Back to Menu List
+			System.out.println("Exiting modifyCourse Method...");
+			return; 
+		}
 
 		//Make sure courseIDs do not match one another
 		//If change capacity, check enrolled students first
@@ -127,18 +226,27 @@ public class Enrollment {
 		System.out.println("Course ID: ");
 		int changeCourID = scannerObj.nextInt();
 
+		while(true){ //Checks if input is within range
+			if (changeCourID >= 1000 && changeCourID <= 9999){
+				break;
+			} else {
+				System.out.println("Invalid Input. 4 Digits & Zero can't be first:");
+				changeCourID = scannerObj.nextInt();
+			}
+		}
+
 		System.out.println("Course Name: ");
-		String changeCourName = scannerObj.next();
+		String changeCourName = scannerObj.nextLine();
 
 		System.out.println("Course Instructor: ");
-		String changeCourInstructor = scannerObj.next();
+		String changeCourInstructor = scannerObj.nextLine();
 
 		System.out.println("Course Capacity: ");
 		int changeCourCapacity = scannerObj.nextInt();
 
 		//Check ID Availability
 		while(true){
-			if(courseHashObj.containsKey(courID)){
+			if(courseHashObj.containsKey(changeCourID)){
 			System.out.println("ID is in use; Try another");
 			System.out.println("Course ID: ");
 			changeCourID = scannerObj.nextInt();	
@@ -155,7 +263,7 @@ public class Enrollment {
 		while(true){
 			if(changeCourCapacity < curCourse.enrolledStudents){
 			System.out.println("Cannot reduce capacity because of the amount of students already enrolled");
-			System.out.println("Course Capacity: ");
+			System.out.println("Try Again. Course Capacity: ");
 		    changeCourCapacity = scannerObj.nextInt();
 		} else {
 			System.out.println("Capacity has been changed");
@@ -172,6 +280,14 @@ public class Enrollment {
 	static void displayCourse(){
 		System.out.println("Which Course to Display? (Type ID)");
 		int courID = scannerObj.nextInt();
+
+		courID = checkCourseID(courID);
+
+		if(courID == -1){ //Exit Method and Back to Menu List
+			System.out.println("Exiting displayCourse Method...");
+			return; 
+		}
+
 		System.out.println(courseHashObj.get(courID).getCourseDetails());
 
 	}
@@ -180,6 +296,14 @@ public class Enrollment {
 	static void displayEnrollStatus(){
 		System.out.println("Which Course to Check Availability? (Type ID)");
 		int courID = scannerObj.nextInt();
+
+		courID = checkCourseID(courID);
+
+		if(courID == -1){ //Exit Method and Back to Menu List
+			System.out.println("Exiting enrollStatus Method...");
+			return;
+		}
+
 		Course curCourse = courseHashObj.get(courID);
 		System.out.println("Course Name: " + curCourse.courseName);
 		System.out.println("Course Capacity: " + curCourse.capacity);
@@ -196,9 +320,37 @@ public class Enrollment {
 
 	//COMPLETE
 	static void displayAllCourses(){
-		for(Course _courses: courseHashObj.values()){
+		if(courseHashObj.isEmpty()){
+			System.out.println("No Courses in System");
+		} else {
+			for(Course _courses: courseHashObj.values()){
 			System.out.println(_courses.getCourseDetails());
+			}
 		}
+	}
+
+	//Checks if studentID is in System
+	static int checkStudentID(int stuIDParams){
+		while(!studentHashObj.containsKey(stuIDParams)){
+			if(stuIDParams == -1){
+				return stuIDParams;
+			}
+			System.out.println("ID Doesn't Exist \nTry again or type -1 to Exit");
+			stuIDParams = scannerObj.nextInt();
+		}
+		return stuIDParams;
+	}
+
+	//Checks if CourseID is in System
+	static int checkCourseID(int courIDParams){
+		while(!courseHashObj.containsKey(courIDParams)){
+			if(courIDParams == -1){
+				return courIDParams;
+			}
+			System.out.println("ID Doesn't Exist \nTry again or type -1 to Exit");
+			courIDParams = scannerObj.nextInt();
+		}
+		return courIDParams;
 	}
 
 	//MAYBE COMPLETE
@@ -212,6 +364,7 @@ public class Enrollment {
 		System.out.println("6. Delete Course");
 		System.out.println("7. Display Course Details");
 		System.out.println("8. Display Course Enrollment Status");
+		System.out.println("-1. Exit Program");
 		int menuChoice = scannerObj.nextInt();
 
 		switch(menuChoice){
