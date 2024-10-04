@@ -135,6 +135,20 @@ public class Enrollment {
 		Student curStudent = studentHashObj.get(stuID);
 		Course curCourse = courseHashObj.get(courID);
 
+		//Check if student is attending the course
+
+		if (curStudent.enrolledCourses.contains(curCourse.courseName)){
+			curCourse.removeCount();
+			System.out.println(curStudent.getName() + " has been dropped from");
+			System.out.println("Course ID: " + curCourse.getCourseID());
+			System.out.println("Course Name: " + curCourse.getCourseName());
+			curStudent.enrolledCourses.remove(curCourse.courseName);
+		} else {
+			System.out.println("Student is not Enrolled in " + curCourse.courseName);
+			System.out.println("Returning to Menu...");
+		}
+
+		/* 
 		//Check if there are any students. if none, give error, and if so, remove student and from their list.
 		if(curCourse.enrolledStudents == 0){
 			System.out.println("Course has 0 Students \nCannot drop");
@@ -145,6 +159,7 @@ public class Enrollment {
 			System.out.println("Course Name: " + curCourse.getCourseName());
 			curStudent.enrolledCourses.remove(curCourse.courseName);
 		}
+		*/
 	}
 
 	//COMPLETE
@@ -225,6 +240,14 @@ public class Enrollment {
 			return; 
 		}
 
+		Course curCourse = courseHashObj.get(courID);
+
+		//Remove course from every student's list
+		//For each studentObject, get the value, indicating the curStudent, grab the enrolledCourses ArrayList, and remove the course that matches the courseName
+		for(HashMap.Entry<Integer, Student> eachCurStudent : studentHashObj.entrySet()){
+			eachCurStudent.getValue().enrolledCourses.remove(curCourse.courseName);
+		}
+
 		System.out.println(courseHashObj.remove(courID).getCourseDetails() + " has been removed");
 	}
 
@@ -253,11 +276,14 @@ public class Enrollment {
 		//Check ID Availability
 		// If HashMap contains the changedID or if input is out of range, ask again
 		while(true){
-			if(courseHashObj.containsKey(changeCourID) || (changeCourID < 1000 && changeCourID > 9999)){
+			if(changeCourID == courID){
+			break;	
+		} else if (courseHashObj.containsKey(changeCourID) || (changeCourID < 1000 || changeCourID > 9999)){
 			System.out.println("ID is invalid. Either ID is in use or invalid input. Try Again");
 			System.out.println("Course ID: ");
-			changeCourID = scannerObj.nextInt();	
-		} else {
+			changeCourID = scannerObj.nextInt();
+		}
+		else {
 			System.out.println("ID has been Changed");
 			courseHashObj.put(changeCourID, curCourse); //Create a hash with the same course but new ID
 			curCourse.setCourseID(changeCourID); //Use a setter to change the course ID
@@ -265,6 +291,8 @@ public class Enrollment {
 			break;
 			}
 		}
+
+		scannerObj.nextLine();
 
 		System.out.println("Course Name: ");
 		String changeCourName = scannerObj.nextLine();
@@ -418,6 +446,7 @@ public class Enrollment {
 		System.out.println("6. Delete Course");
 		System.out.println("7. Display Course Details");
 		System.out.println("8. Display Course Enrollment Status");
+		System.out.println("9. Modify Course");
 		System.out.println("-1. Exit Program");
 		int menuChoice = scannerObj.nextInt();
 
@@ -448,6 +477,9 @@ public class Enrollment {
 				break;
 			case 8:
 				displayEnrollStatus();
+				break;
+			case 9:
+				modifyCourse();
 				break;
 			default:
 				System.out.println("Invalid Input \nExiting Program");
