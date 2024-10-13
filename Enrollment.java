@@ -1,15 +1,22 @@
 import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Scanner;
+import java.util.Comparator;
 
 public class Enrollment {
 	Course courseObj = new Course(0, null, null ,0, 0);
 	static Student studentObj = new Student(0, null, 0, null);
-	static Scanner scannerObj = new Scanner(System.in);
-	static HashMap<Integer, Student> studentHashObj = new HashMap<>();
-	static HashMap<Integer, Course> courseHashObj = new HashMap<>();
-	static PriorityQueue<Integer> priorityQueueObj = new PriorityQueue<>();
+	static Scanner scannerObj = new Scanner(System.in); //Uses Scanner for input
+	static HashMap<Integer, Student> studentHashObj = new HashMap<>(); //Creates a Hashmap that takes StuID as key and Student Obj as value
+	static HashMap<Integer, Course> courseHashObj = new HashMap<>(); //Creates a Hashmap that takes courseID as key and Course Obj as value
+	
+	static Comparator<Course> compareCourseObj = new Comparator<Course>() {
+		public int compare(Course one, Course two){
+			return Integer.compare(two.enrolledStudents, one.enrolledStudents);
+		}
+	};
 
+	static PriorityQueue<Course> pqScheduleObj = new PriorityQueue<>(compareCourseObj);
 	//Program needs to check if id is valid when entered for all cases
 
 	//COMPLETE
@@ -375,6 +382,26 @@ public class Enrollment {
 		}
 	}
 
+	//MAYBE COMPLETE
+	static void checkCurSchedule(){
+		System.out.println("Schedule with most students is prioritized and will begin sequentially with one hour apart after class ends. \nIf the course has the same amount of students, the schedule will be based on which is added onto the system first.");
+		if(courseHashObj.isEmpty()){
+			System.out.println("There are no courses. Cannot create schedule.");
+		} else{
+			for(Course _courses : courseHashObj.values()){
+				pqScheduleObj.add(_courses);
+			}
+
+			System.out.println("The class will begin in the following order:");
+
+			while(!pqScheduleObj.isEmpty()){
+				Course polledCourse = pqScheduleObj.poll();
+				System.out.print("Course ID: " + polledCourse.getCourseID() + "Course Name: " + polledCourse.getCourseName());
+			}
+		}
+
+	}
+
 	//Checks if studentID is in System
 	static int checkStudentIDinHash(int stuIDParams){
 		while(!studentHashObj.containsKey(stuIDParams)){
@@ -447,6 +474,9 @@ public class Enrollment {
 		System.out.println("7. Display Course Details");
 		System.out.println("8. Display Course Enrollment Status");
 		System.out.println("9. Modify Course");
+		System.out.println("10. Check Schedule");
+		System.out.println("11. Display All Students");
+		System.out.println("12. Display All Courses");
 		System.out.println("-1. Exit Program");
 		int menuChoice = scannerObj.nextInt();
 
@@ -480,6 +510,15 @@ public class Enrollment {
 				break;
 			case 9:
 				modifyCourse();
+				break;
+			case 10:
+				checkCurSchedule();
+				break;
+			case 11:
+				displayAllStudents();
+				break;
+			case 12:
+				displayAllCourses();
 				break;
 			default:
 				System.out.println("Invalid Input \nExiting Program");
