@@ -99,6 +99,11 @@ public class Enrollment {
 		Student curStudent = studentHashObj.get(stuID);
 		Course curCourse = courseHashObj.get(courID);
 
+		//Check if student is already enrolled
+		if(curStudent.enrolledCourses.contains(curCourse.courseName)){
+			return; //If student is already enrolled in the course or similar course, do not enroll and exit the method
+		}
+
 		//Check if Capacity is available. If so, add student, and if not, dont add.
 		//Increase enrollment by 1 count
 		//Save the enrolled class into the students list somewhere
