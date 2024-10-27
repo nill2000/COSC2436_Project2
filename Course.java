@@ -5,6 +5,7 @@ public class Course {
 	int capacity;
 	int enrolledStudents;
 
+	//Constructor
 	public Course(int courseID, String courseName, String instructor, int capacity, int enrolledStudents){
 		this.courseID = courseID;
 		this.courseName = courseName;
@@ -53,6 +54,7 @@ public class Course {
 		return this.enrolledStudents;
 	}
 
+	//Getter to display details
 	String getCourseDetails(){
 		return String.format("CourseID: %s, Course Name: %s, Instructor: %s, Capacity: %d, Enrolled: %d", this.courseID, this.courseName, this.instructor, this.capacity, this.enrolledStudents);
 	}

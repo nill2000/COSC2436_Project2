@@ -4,49 +4,39 @@ import java.util.Scanner;
 import java.util.Comparator;
 
 public class Enrollment {
-	Course courseObj = new Course(0, null, null ,0, 0);
-	static Student studentObj = new Student(0, null, 0, null);
-	static Scanner scannerObj = new Scanner(System.in); //Uses Scanner for input
-	static HashMap<Integer, Student> studentHashObj = new HashMap<>(); //Creates a Hashmap that takes StuID as key and Student Obj as value
-	static HashMap<Integer, Course> courseHashObj = new HashMap<>(); //Creates a Hashmap that takes courseID as key and Course Obj as value
-	
-	static Comparator<Course> compareCourseObj = new Comparator<Course>() {
+	Course courseObj = new Course(0, null, null ,0, 0); //Initializes a Course Class - courseObj
+	static Student studentObj = new Student(0, null, 0, null); //Initializes a Student Class - studentObj
+	static Scanner scannerObj = new Scanner(System.in); //Initializes a Scanner for input - scannerObj
+	static HashMap<Integer, Student> studentHashObj = new HashMap<>(); //Initializes a Hashmap - studentHashObj - that takes StuID as key and Student Obj as value
+	static HashMap<Integer, Course> courseHashObj = new HashMap<>(); //Initializes a Hashmap - courseHashObj - that takes courseID as key and Course Obj as value
+	static Comparator<Course> compareCourseObj = new Comparator<Course>() { // Initializes a Comparator class for comparing class priority for scheduling based on more students
 		public int compare(Course one, Course two){
 			return Integer.compare(two.enrolledStudents, one.enrolledStudents);
 		}
 	};
 
-	static PriorityQueue<Course> pqScheduleObj = new PriorityQueue<>(compareCourseObj);
+	static PriorityQueue<Course> pqScheduleObj = new PriorityQueue<>(compareCourseObj); //Initializes a PQ class that takes Course Class Objects - pqScheduleObj
 	//Program needs to check if id is valid when entered for all cases
 
-	//COMPLETE
+	//Function that adds a student 
 	static void addStudent(){
-		System.out.println("Student ID (4 Digits and Zero can't be first digit):");
+		//Scanner that takes student ID
+		System.out.println("Student ID (4 Digits and Zero can't be first digit):"); 
 		int stuID = scannerObj.nextInt();
 
-		//Checks if ID is already in use and if input is in range
-		// while(true){
-		// 	if((studentHashObj.containsKey(stuID)) || (stuID < 1000 && stuID > 9999)){
-		// 	System.out.println("ID is either an invalid input or in use. Try Again");
-		// 	System.out.println("Student ID (Zero Can't be First and Only 4 Digits): ");
-		// 	stuID = scannerObj.nextInt();	
-		// } else {
-		// 	break;
-		// 	}
-		// }
-
-		stuID = checkStudentID_InUseAndRange(stuID);
+		//Function checks if stuID is in-use or within range
+		stuID = checkStudentID_InUseAndRange(stuID); 
 
 		scannerObj.nextLine();
 
-		//Gets Student Name
-		System.out.println("Student Name:");
+		//Scanner that takes student name
+		System.out.println("Student Name:"); 
 		String stuName = scannerObj.nextLine();
 
-		//Gets Student Age within 18-40
-		System.out.println("Student Age (18-40 for Simplicity) :");
+		//Scanner that takes student age within 18-40
+		System.out.println("Student Age (18-40 for Simplicity) :"); 
 		int stuAge = scannerObj.nextInt();
-		while(true){ //Checks if input is in range
+		while(true){ //Condition statment checks if student age is within range
 			if (stuAge >= 18 & stuAge <= 40){
 				break;
 			} else {
@@ -57,45 +47,46 @@ public class Enrollment {
 
 		scannerObj.nextLine();
 
-		//Gets Student Major
-		System.out.println("Student Major:");
+		//Scanner that takes student major
+		System.out.println("Student Major:"); 
 		String stuMajor = scannerObj.nextLine();
 
 		//Creates the Student object with given info
 		Student studentObj = new Student(stuID, stuName, stuAge, stuMajor);
 
-		//Saves the Student into a Hash with ID as their key
+		//Saves the Student into a Hashmap with ID as their key
 		studentHashObj.put(stuID, studentObj);
 	}
 
-	//COMPLETE - Needs to check if ID is available
+	//Function enrolls student into a course
 	static void enrollStudent(){
-		//Searches for student ID
+		//Scanner that takes student ID
 		System.out.println("Which Student? (Type ID)");
 		int stuID = scannerObj.nextInt();
 
-		//Checks if Student ID is in Hash
+		//Checks if Student ID is in Hashmap
 		stuID = checkStudentIDinHash(stuID);
 
-		//Exit Method and Back to Menu List
+		//Exit enrollStudent method and back to menu List
 		if(stuID == -1){
 			System.out.println("Exiting enrollStudent Method...");
 			return;
 		}
 
-		//Searches for Course ID
+		//Scanner that takes Course ID
 		System.out.println("Which Course to Enroll? (Type ID)");
 		int courID = scannerObj.nextInt();
 
 		//Checks if CourseID is in Hash
 		courID = checkCourseIDinHash(courID);
 
-		//Exit Method and Back to Menu List
+		//Exit enrollStudent method and back to menu List
 		if(courID == -1){ 
 			System.out.println("Exiting enrollStudent Method...");
 			return; 
 		}
 
+		//If everything passes, create a variable that takes the current student/course
 		Student curStudent = studentHashObj.get(stuID);
 		Course curCourse = courseHashObj.get(courID);
 
@@ -104,12 +95,10 @@ public class Enrollment {
 			return; //If student is already enrolled in the course or similar course, do not enroll and exit the method
 		}
 
-		//Check if Capacity is available. If so, add student, and if not, dont add.
-		//Increase enrollment by 1 count
-		//Save the enrolled class into the students list somewhere
-		if(curCourse.enrolledStudents == curCourse.capacity){
+		//Check if the course's capacity is available.
+		if(curCourse.enrolledStudents == curCourse.capacity){ //If not, do not add student
 			System.out.println("Enrollment Status is Closed");
-		} else {
+		} else { //If available, increase the course count by 1 and add the student
 			curCourse.increaseCount();
 			System.out.println(curStudent.getName() + " has been enrolled into");
 			System.out.println("Course ID: " + curCourse.getCourseID());
@@ -118,27 +107,29 @@ public class Enrollment {
 		}
 	}
 
-	//COMPLETE Needs to check if ID is available
+	//Function that drops student from course
 	static void dropStudent(){
+		//Scanner takes student ID
 		System.out.println("Which Student? (Type ID)");
 		int stuID = scannerObj.nextInt();
 
 		//Checks if Student ID is in Hash
 		stuID = checkStudentIDinHash(stuID);
         
-		//Exit Method and Back to Menu List
+		//Exit dropStudent method and back to menu List
 		if(stuID == -1){ 
 			System.out.println("Exiting enrollStudent Method...");
 			return;
 		}
 
+		//Scanner takes course ID
 		System.out.println("Which Course to Drop? (Type ID)");
 		int courID = scannerObj.nextInt();
 
 		//Checks if courID is in HashMap
 		courID = checkCourseIDinHash(courID);
         
-		//Exit Method and Back to Menu List
+		//Exit dropStudent method and back to menu List
 		if(courID == -1){ 
 			System.out.println("Exiting enrollStudent Method...");
 			return; 
@@ -147,15 +138,14 @@ public class Enrollment {
 		Student curStudent = studentHashObj.get(stuID);
 		Course curCourse = courseHashObj.get(courID);
 
-		//Check if student is attending the course
-
+		//Checks if student is attending the course
 		if (curStudent.enrolledCourses.contains(curCourse.courseName)){
 			curCourse.removeCount();
 			System.out.println(curStudent.getName() + " has been dropped from");
 			System.out.println("Course ID: " + curCourse.getCourseID());
 			System.out.println("Course Name: " + curCourse.getCourseName());
 			curStudent.enrolledCourses.remove(curCourse.courseName);
-		} else {
+		} else { //If not, notify user and do nothing
 			System.out.println("Student is not Enrolled in " + curCourse.courseName);
 			System.out.println("Returning to Menu...");
 		}
@@ -174,15 +164,17 @@ public class Enrollment {
 		*/
 	}
 
-	//COMPLETE
+	//Function that displays a specific student's details
 	static void displayStudent(){
+		//Scanner takes student ID
 		System.out.println("Which Student (Type ID)?");
 		int stuID = scannerObj.nextInt();
 
 		//Checks if Student ID is in Hash
 		stuID = checkStudentIDinHash(stuID);
 
-		if(stuID == -1){ //Exit Method and Back to Menu List
+		//Exit displayStudent Method and Back to Menu List
+		if(stuID == -1){ 
 			System.out.println("Exiting displayStudent Method...");
 			return;
 		}
@@ -190,7 +182,7 @@ public class Enrollment {
 		System.out.println(studentHashObj.get(stuID).getStudentDetails());
 	}
 
-	//COMPLETE
+	//Function that displays all the students and their details
 	static void displayAllStudents(){
 		if(studentHashObj.isEmpty()){
 			System.out.println("No Students in System");
@@ -201,26 +193,30 @@ public class Enrollment {
 		}
 	}
 
-	//COMPLETE
+	//Function to add course
 	static void addCourse(){
+		//Scanner takes course ID
 		System.out.println("Course ID (Four Digits & Zero cant be first):");
 		int courID = scannerObj.nextInt();
 
-		//Check ID Availability
 		//CHecks if ID is already in use or out of range
 		courID = checkCourseID_InUseAndRange(courID);
 
 		scannerObj.nextLine();
 
+		//Scanner takes course name
 		System.out.println("Course Name:");
 		String courName = scannerObj.nextLine();
 
+		//Scanner takes instructor name
 		System.out.println("Instructor Name:");
 		String courInstructor = scannerObj.nextLine();
 	
+		//Scanner takes course capacity
 		System.out.println("Course Capacity (5-10 For Simplicity)");
 		int courCapacity = scannerObj.nextInt();
 
+		//Condition to check course capacity
 		while(true){
 			if(courCapacity < 5 || courCapacity > 10){
 				System.out.println("Invalid Input. Try Again.");
@@ -233,7 +229,9 @@ public class Enrollment {
 
 		System.out.println("");
 
+		//Creates a course object with the given values
 		Course courseObj = new Course(courID, courName, courInstructor, courCapacity, 0);
+		//Places the current course object into a hashmap with course ID as the key
 		courseHashObj.put(courID, courseObj);
 	}
 
@@ -252,6 +250,7 @@ public class Enrollment {
 			return; 
 		}
 
+		//After checking, grabs the current course
 		Course curCourse = courseHashObj.get(courID);
 
 		//Remove course from every student's list
@@ -260,6 +259,7 @@ public class Enrollment {
 			eachCurStudent.getValue().enrolledCourses.remove(curCourse.courseName);
 		}
 
+		//In the courseHashObj, grab the removed course and its details to print into console, in addition to "actually" removing it. 
 		System.out.println(courseHashObj.remove(courID).getCourseDetails() + " has been removed");
 	}
 

@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 
 public class Student {
-	int studentID;
+	int studentID; 
 	String name;
 	int age;
 	String major;
-	ArrayList<String> enrolledCourses = new ArrayList<>();
+	ArrayList<String> enrolledCourses = new ArrayList<>(); //enrollCourses take an ArrayList of Strings
 
+	//Constructor
 	public Student(int studentID, String name, int age, String major) {
 		this.studentID = studentID;
 		this.name = name;
@@ -14,6 +15,7 @@ public class Student {
 		this.major = major;
 	};
 
+	//Getters
 	int getStuID(){
 		return this.studentID;
 	}
@@ -30,6 +32,7 @@ public class Student {
 		return this.major;
 	}
 
+	//Getter to display all details
 	String getStudentDetails(){
 		return String.format("ID: %s, Name: %s, Age: %d, Major: %s, Courses: %s", this.studentID, this.name, this.age, this.major, enrolledCourses.toString());
 	}
