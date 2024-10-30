@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.Comparator;
 
 public class Enrollment {
-	Course courseObj = new Course(0, null, null ,0, 0); //Initializes a Course Class - courseObj
+	static Course courseObj = new Course(0, null, null ,0, 0); //Initializes a Course Class - courseObj
 	static Student studentObj = new Student(0, null, 0, null); //Initializes a Student Class - studentObj
 	static Scanner scannerObj = new Scanner(System.in); //Initializes a Scanner for input - scannerObj
 	static HashMap<Integer, Student> studentHashObj = new HashMap<>(); //Initializes a Hashmap - studentHashObj - that takes StuID as key and Student Obj as value
@@ -19,7 +19,7 @@ public class Enrollment {
 	//Program needs to check if id is valid when entered for all cases
 
 	//Function that adds a student 
-	static void addStudent(){
+	void addStudent(){
 		//Scanner that takes student ID
 		System.out.println("Student ID (4 Digits and Zero can't be first digit):"); 
 		int stuID = scannerObj.nextInt();
@@ -59,7 +59,7 @@ public class Enrollment {
 	}
 
 	//Function enrolls student into a course
-	static void enrollStudent(){
+	void enrollStudent(){
 		//Scanner that takes student ID
 		System.out.println("Which Student? (Type ID)");
 		int stuID = scannerObj.nextInt();
@@ -108,7 +108,7 @@ public class Enrollment {
 	}
 
 	//Function that drops student from course
-	static void dropStudent(){
+	void dropStudent(){
 		//Scanner takes student ID
 		System.out.println("Which Student? (Type ID)");
 		int stuID = scannerObj.nextInt();
@@ -165,7 +165,7 @@ public class Enrollment {
 	}
 
 	//Function that displays a specific student's details
-	static void displayStudent(){
+	void displayStudent(){
 		//Scanner takes student ID
 		System.out.println("Which Student (Type ID)?");
 		int stuID = scannerObj.nextInt();
@@ -183,7 +183,7 @@ public class Enrollment {
 	}
 
 	//Function that displays all the students and their details
-	static void displayAllStudents(){
+	void displayAllStudents(){
 		if(studentHashObj.isEmpty()){
 			System.out.println("No Students in System");
 		} else {
@@ -194,7 +194,7 @@ public class Enrollment {
 	}
 
 	//Function to add course
-	static void addCourse(){
+	void addCourse(){
 		//Scanner takes course ID
 		System.out.println("Course ID (Four Digits & Zero cant be first):");
 		int courID = scannerObj.nextInt();
@@ -237,7 +237,7 @@ public class Enrollment {
 
 	//COMPLETE
 	//Loop through every Student's enrolled course and remove from their list
-	static void deleteCourse(){
+	void deleteCourse(){
 		System.out.println("Which Course to Delete? (Type ID)");
 		int courID = scannerObj.nextInt();
 
@@ -265,7 +265,7 @@ public class Enrollment {
 
 	//MAYBE COMPLETE
 	//Check ID Availability and Range
-	static void modifyCourse(){
+	void modifyCourse(){
 		System.out.println("Which Course to Modify? (Type ID)");
 		int courID = scannerObj.nextInt();
 		Course curCourse = courseHashObj.get(courID);
@@ -337,7 +337,7 @@ public class Enrollment {
 	}
 
 	//COMPLETE
-	static void displayCourse(){
+	void displayCourse(){
 		//Scanner takes the course ID
 		System.out.println("Which Course to Display? (Type ID)");
 		int courID = scannerObj.nextInt();
@@ -358,7 +358,7 @@ public class Enrollment {
 
 	//COMPLETE
 	//Function displays a course's enrollment status
-	static void displayEnrollStatus(){
+	void displayEnrollStatus(){
 		//Scanner takes course ID
 		System.out.println("Which Course to Check Availability? (Type ID)");
 		int courID = scannerObj.nextInt();
@@ -389,7 +389,7 @@ public class Enrollment {
 
 	//COMPLETE
 	//Function that displays all courses
-	static void displayAllCourses(){
+	void displayAllCourses(){
 		if(courseHashObj.isEmpty()){ //If the course hashmap is empty, CLI notifies the user.
 			System.out.println("No Courses in System");
 		} else { //If not empty, the program will get each value in the course hashmap and use the generalized getters for the object and print its values
@@ -400,7 +400,7 @@ public class Enrollment {
 	}
 
 	//MAYBE COMPLETE
-	static void checkCurSchedule(){
+	void checkCurSchedule(){
 		System.out.println("Schedule with most students is prioritized and will begin sequentially with one hour apart after class ends. \nIf the course has the same amount of students, the schedule will be based on which is added onto the system first.");
 		if(courseHashObj.isEmpty()){
 			System.out.println("There are no courses. Cannot create schedule.");
@@ -422,7 +422,7 @@ public class Enrollment {
 	}
 
 	//Checks if studentID is in System
-	static int checkStudentIDinHash(int stuIDParams){
+	int checkStudentIDinHash(int stuIDParams){
 		while(!studentHashObj.containsKey(stuIDParams)){ //Condition checks if the given student ID is in the student hashmap
 			if(stuIDParams == -1){ //This condition allows the user to exit the current function and return back to the menu list
 				return stuIDParams;
@@ -435,7 +435,7 @@ public class Enrollment {
 	}
 
 	//Checks if CourseID is in System
-	static int checkCourseIDinHash(int courIDParams){
+	int checkCourseIDinHash(int courIDParams){
 		while(!courseHashObj.containsKey(courIDParams)){ //Condition checks if the given course ID is in the course hashmap
 			if(courIDParams == -1){ //This condition allows the user to exit the current function and return back to the menu list
 				return courIDParams;
@@ -448,7 +448,7 @@ public class Enrollment {
 	}
 
 	//Checks if student ID is already in use and if input is within range
-	static int checkStudentID_InUseAndRange(int stuIDParams){
+	int checkStudentID_InUseAndRange(int stuIDParams){
 		while(true){
 			if(studentHashObj.containsKey(stuIDParams)){ //If the student hashmap contains the key, ask for a new student ID
 			System.out.println("ID is in use. Try Again");
@@ -466,7 +466,7 @@ public class Enrollment {
 	}
 
 	//Checks if course ID is already in use and if input is within range
-	static int checkCourseID_InUseAndRange(int courIDParams){
+	int checkCourseID_InUseAndRange(int courIDParams){
 		while(true){
 			if(courseHashObj.containsKey(courIDParams)){ //If the course hashmap contains the key, ask for a new course ID
 			System.out.println("ID is in use. Try Again");
@@ -483,78 +483,10 @@ public class Enrollment {
 		}
 	}
 
-	//MAYBE COMPLETE
-	public static void menuList(){
-		System.out.println("Choose Option (Type Integer):");
-		System.out.println("1. Add Student");
-		System.out.println("2. Enroll Student");
-		System.out.println("3. Drop Student");
-		System.out.println("4. Display Student Details");
-		System.out.println("5. Add Course");
-		System.out.println("6. Delete Course");
-		System.out.println("7. Display Course Details");
-		System.out.println("8. Display Course Enrollment Status");
-		System.out.println("9. Modify Course");
-		System.out.println("10. Check Schedule");
-		System.out.println("11. Display All Students");
-		System.out.println("12. Display All Courses");
-		System.out.println("-1. Exit Program");
-		int menuChoice = scannerObj.nextInt();
 
-		switch(menuChoice){
-			case -1:
-				System.out.println("Exiting Program");
-				System.exit(0);
-			case 1:
-				addStudent();
-				break;
-			case 2:
-				enrollStudent();
-				break;
-			case 3:
-				dropStudent();
-				break;
-			case 4:
-				displayStudent();
-				break;
-			case 5:
-				addCourse();
-				break;
-			case 6:
-				deleteCourse();
-				break;
-			case 7:
-				displayCourse();
-				break;
-			case 8:
-				displayEnrollStatus();
-				break;
-			case 9:
-				modifyCourse();
-				break;
-			case 10:
-				checkCurSchedule();
-				break;
-			case 11:
-				displayAllStudents();
-				break;
-			case 12:
-				displayAllCourses();
-				break;
-			default:
-				System.out.println("Invalid Input \nExiting Program");
-				System.exit(0);
-		}
-		System.out.println();
-	}
 
 	public static void main(String[] args){
 		System.out.println("Enrollment Class Sucess");
-
-		Boolean Running = true;
-		while(Running){
-			menuList();
-		}
 
 	}
 }
