@@ -288,14 +288,14 @@ public class Enrollment {
 		//Check ID Availability
 		// If HashMap contains the changedID or if input is out of range, ask again
 		while(true){
-			if(changeCourID == courID){
+			if(changeCourID == courID){ //This statement is an exception as it checks if the user wants to keep the same ID
 			break;	
-		} else if (courseHashObj.containsKey(changeCourID) || (changeCourID < 1000 || changeCourID > 9999)){
+		} else if (courseHashObj.containsKey(changeCourID) || (changeCourID < 1000 || changeCourID > 9999)){ //This is statement that checks if ID is available if it's a dupe or within range
 			System.out.println("ID is invalid. Either ID is in use or invalid input. Try Again");
 			System.out.println("Course ID: ");
 			changeCourID = scannerObj.nextInt();
 		}
-		else {
+		else { //If this statement is reached, the ID will change
 			System.out.println("ID has been Changed");
 			courseHashObj.put(changeCourID, curCourse); //Create a hash with the same course but new ID
 			curCourse.setCourseID(changeCourID); //Use a setter to change the course ID
@@ -306,81 +306,93 @@ public class Enrollment {
 
 		scannerObj.nextLine();
 
+		//Scanner takes the new course name
 		System.out.println("Course Name: ");
 		String changeCourName = scannerObj.nextLine();
 
+		//Scanner takes the new instructor
 		System.out.println("Course Instructor: ");
 		String changeCourInstructor = scannerObj.nextLine();
 
+		//Scanner takes the new course capacity
 		System.out.println("Course Capacity: ");
 		int changeCourCapacity = scannerObj.nextInt();
 
 		//Check Course Capacity
 		while(true){
-			if(changeCourCapacity < curCourse.enrolledStudents){
+			if(changeCourCapacity < curCourse.enrolledStudents){ //This condition checks if the new capacity is less than the currently enrolled students. If so, the program can't change the capacity. 
 			System.out.println("Cannot reduce capacity because of the amount of students already enrolled");
 			System.out.println("Try Again. Course Capacity (5-10): ");
 		    changeCourCapacity = scannerObj.nextInt();
-		} else {
+		} else { //Changes the course capacity if the new capacity isnt less than enrolled students
 			System.out.println("Capacity has been set");
 			curCourse.setCapacity(changeCourCapacity);
 			break;
 			}
 		}
 		
+		//The setters to change the new information if everything passes
 		curCourse.setCourseName(changeCourName);
 		curCourse.setInstructor(changeCourInstructor);
 	}
 
 	//COMPLETE
 	static void displayCourse(){
+		//Scanner takes the course ID
 		System.out.println("Which Course to Display? (Type ID)");
 		int courID = scannerObj.nextInt();
 
+		//Function checks if Course ID is in hashmap
 		courID = checkCourseIDinHash(courID);
 
-		//Exit Method and Back to Menu List
+		//Exit the displayCourse Method and Back to Menu List
 		if(courID == -1){ 
 			System.out.println("Exiting displayCourse Method...");
 			return; 
 		}
 
+		//If course ID is available, go into the courseHashObj and grab the Course with the associated value. Then, print the details form the Course Object because of its associated function from the class - a generalized getter.
 		System.out.println(courseHashObj.get(courID).getCourseDetails());
 
 	}
 
 	//COMPLETE
+	//Function displays a course's enrollment status
 	static void displayEnrollStatus(){
+		//Scanner takes course ID
 		System.out.println("Which Course to Check Availability? (Type ID)");
 		int courID = scannerObj.nextInt();
 
+		//Checks if the course ID is in the hashmap
 		courID = checkCourseIDinHash(courID);
 
-		//Exit Method and Back to Menu List
+		//Exit the displayEnrollStatus Method and Back to Menu List
 		if(courID == -1){ 
 			System.out.println("Exiting enrollStatus Method...");
 			return;
 		}
 
+		//Save the current course into a variable with the desired course after obtaining it from using the key and prints the needed getters.
 		Course curCourse = courseHashObj.get(courID);
 		System.out.println("Course Name: " + curCourse.courseName);
 		System.out.println("Course Capacity: " + curCourse.capacity);
 		System.out.println("Enrollment Amount: " + curCourse.enrolledStudents);
 
 		//If enrolledStudents match courseCapacity, enrollment is closed
-		if(curCourse.enrolledStudents == curCourse.capacity){
+		if(curCourse.enrolledStudents == curCourse.capacity){ //This means that the enrolled students maxed the capacity
 			System.out.println("Enrollment Status is Closed");
-		} else {
+		} else { //If not, the enrollment is still open
 			System.out.println("Enrollment Status is Open");
 		}
 
 	}
 
 	//COMPLETE
+	//Function that displays all courses
 	static void displayAllCourses(){
-		if(courseHashObj.isEmpty()){
+		if(courseHashObj.isEmpty()){ //If the course hashmap is empty, CLI notifies the user.
 			System.out.println("No Courses in System");
-		} else {
+		} else { //If not empty, the program will get each value in the course hashmap and use the generalized getters for the object and print its values
 			for(Course _courses: courseHashObj.values()){
 			System.out.println(_courses.getCourseDetails());
 			}
@@ -393,12 +405,14 @@ public class Enrollment {
 		if(courseHashObj.isEmpty()){
 			System.out.println("There are no courses. Cannot create schedule.");
 		} else{
-			for(Course _courses : courseHashObj.values()){
+			pqScheduleObj.clear(); //Clear the pq first to prevent dupes
+			for(Course _courses : courseHashObj.values()){ //Add the courses according to the comparator
 				pqScheduleObj.add(_courses);
 			}
 
 			System.out.println("The class will begin in the following order:");
 
+			//While the pq is not empty, continuously return the value and use the getters to print the Course ID and course Name
 			while(!pqScheduleObj.isEmpty()){
 				Course polledCourse = pqScheduleObj.poll();
 				System.out.print("Course ID: " + polledCourse.getCourseID() + "Course Name: " + polledCourse.getCourseName());
@@ -409,10 +423,11 @@ public class Enrollment {
 
 	//Checks if studentID is in System
 	static int checkStudentIDinHash(int stuIDParams){
-		while(!studentHashObj.containsKey(stuIDParams)){
-			if(stuIDParams == -1){
+		while(!studentHashObj.containsKey(stuIDParams)){ //Condition checks if the given student ID is in the student hashmap
+			if(stuIDParams == -1){ //This condition allows the user to exit the current function and return back to the menu list
 				return stuIDParams;
 			}
+			//Scanner asks for the student ID again
 			System.out.println("ID Doesn't Exist \nTry again or type -1 to Exit");
 			stuIDParams = scannerObj.nextInt();
 		}
@@ -421,10 +436,11 @@ public class Enrollment {
 
 	//Checks if CourseID is in System
 	static int checkCourseIDinHash(int courIDParams){
-		while(!courseHashObj.containsKey(courIDParams)){
-			if(courIDParams == -1){
+		while(!courseHashObj.containsKey(courIDParams)){ //Condition checks if the given course ID is in the course hashmap
+			if(courIDParams == -1){ //This condition allows the user to exit the current function and return back to the menu list
 				return courIDParams;
 			}
+			//Scanner asks the course ID again
 			System.out.println("ID Doesn't Exist \nTry again or type -1 to Exit");
 			courIDParams = scannerObj.nextInt();
 		}
@@ -434,16 +450,16 @@ public class Enrollment {
 	//Checks if student ID is already in use and if input is within range
 	static int checkStudentID_InUseAndRange(int stuIDParams){
 		while(true){
-			if(studentHashObj.containsKey(stuIDParams)){
+			if(studentHashObj.containsKey(stuIDParams)){ //If the student hashmap contains the key, ask for a new student ID
 			System.out.println("ID is in use. Try Again");
 			System.out.println("Student ID (Zero Can't be First and Only 4 Digits): ");
 			stuIDParams = scannerObj.nextInt();	
-		} else if (stuIDParams < 1000 || stuIDParams > 9999) {
+		} else if (stuIDParams < 1000 || stuIDParams > 9999) { //If the student ID is not 4 digits, ask again
 			System.out.println("ID is an invalid input. Try Again");
 			System.out.println("Student ID (Zero Can't be First and Only 4 Digits): ");
 			stuIDParams = scannerObj.nextInt();	
 		}
-		else {
+		else { //If everything is successful, use the new ID for the student
 			return stuIDParams;
 			}
 		}
@@ -452,16 +468,16 @@ public class Enrollment {
 	//Checks if course ID is already in use and if input is within range
 	static int checkCourseID_InUseAndRange(int courIDParams){
 		while(true){
-			if(courseHashObj.containsKey(courIDParams)){
+			if(courseHashObj.containsKey(courIDParams)){ //If the course hashmap contains the key, ask for a new course ID
 			System.out.println("ID is in use. Try Again");
 			System.out.println("Course ID (Zero Can't be First and Only 4 Digits): ");
 			courIDParams = scannerObj.nextInt();	
-		} else if (courIDParams < 1000 || courIDParams > 9999){
+		} else if (courIDParams < 1000 || courIDParams > 9999){ //If the course hashmap contains the key, ask for a new course ID
 			System.out.println("ID is an invalid input. Try Again");
 			System.out.println("Course ID (Zero Can't be First and Only 4 Digits): ");
 			courIDParams = scannerObj.nextInt();	
 		}
-		else {
+		else { //If successful, use the new ID for the Course
 			return courIDParams;
 			}
 		}
