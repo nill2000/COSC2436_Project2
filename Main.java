@@ -7,6 +7,7 @@
  1. Update Courses class name in student's course after modifying course
  2. Do not delete course if student is enrolled
  3. Create msg if student is already enrolled
+ 4. Format CLI better
  */
 
 import java.util.Scanner;

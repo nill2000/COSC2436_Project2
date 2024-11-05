@@ -418,6 +418,7 @@ public class Enrollment {
 			while(!pqScheduleObj.isEmpty()){
 				Course polledCourse = pqScheduleObj.poll();
 				System.out.print("Course ID: " + polledCourse.getCourseID() + "Course Name: " + polledCourse.getCourseName());
+				System.out.println();
 			}
 		}
 
