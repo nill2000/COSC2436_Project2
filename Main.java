@@ -3,6 +3,12 @@
 //Nov 15 2024
 //COSC2436 Project 2
 
+/*
+ 1. Update Courses class name in student's course after modifying course
+ 2. Do not delete course if student is enrolled
+ 3. Create msg if student is already enrolled
+ */
+
 import java.util.Scanner;
 public class Main{
 	static Enrollment enrollmentObj = new Enrollment();

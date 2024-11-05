@@ -92,6 +92,8 @@ public class Enrollment {
 
 		//Check if student is already enrolled
 		if(curStudent.enrolledCourses.contains(curCourse.courseName)){
+			System.out.println("Student is already enrolled");
+			System.out.println("Exiting enrollStudent method");
 			return; //If student is already enrolled in the course or similar course, do not enroll and exit the method
 		}
 
