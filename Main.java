@@ -4,9 +4,6 @@
 //COSC2436 Project 2
 
 /*
- 1. Update Courses class name in student's course after modifying course
- 2. Do not delete course if student is enrolled
- 3. Create msg if student is already enrolled
  4. Format CLI better
  */
 
@@ -37,39 +34,51 @@ public class Main{
 				System.out.println("Exiting Program");
 				System.exit(0);
 			case 1:
+				System.out.println();
 				enrollmentObj.addStudent();
 				break;
 			case 2:
+				System.out.println();
 				enrollmentObj.enrollStudent();
 				break;
 			case 3:
+				System.out.println();
 				enrollmentObj.dropStudent();
 				break;
 			case 4:
+				System.out.println();
 				enrollmentObj.displayStudent();
 				break;
 			case 5:
+				System.out.println();
 				enrollmentObj.addCourse();
 				break;
 			case 6:
+				System.out.println();
 				enrollmentObj.deleteCourse();
 				break;
 			case 7:
+				System.out.println();
 				enrollmentObj.displayCourse();
 				break;
 			case 8:
+				System.out.println();
 				enrollmentObj.displayEnrollStatus();
 				break;
 			case 9:
+				System.out.println();
 				enrollmentObj.modifyCourse();
 				break;
 			case 10:
+				System.out.println();
 				enrollmentObj.checkCurSchedule();
 				break;
 			case 11:
+				System.out.println();
 				enrollmentObj.displayAllStudents();
 				break;
 			case 12:
+				System.out.println();
 				enrollmentObj.displayAllCourses();
 				break;
 			default:
@@ -80,10 +89,11 @@ public class Main{
 	}
 
 	public static void main(String[] args){
-		System.out.println("Main Class Success");
+		System.out.println("Main Class Success \n");
 
 		Boolean Running = true;
 		while(Running){
+			System.out.println();
 			menuList();
 		}
 	}

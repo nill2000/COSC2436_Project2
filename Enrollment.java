@@ -20,9 +20,11 @@ public class Enrollment {
 
 	//Function that adds a student 
 	void addStudent(){
+
 		//Scanner that takes student ID
 		System.out.println("Student ID (4 Digits and Zero can't be first digit):"); 
 		int stuID = scannerObj.nextInt();
+		System.out.println();
 
 		//Function checks if stuID is in-use or within range
 		stuID = checkStudentID_InUseAndRange(stuID); 
@@ -32,6 +34,7 @@ public class Enrollment {
 		//Scanner that takes student name
 		System.out.println("Student Name:"); 
 		String stuName = scannerObj.nextLine();
+		System.out.println();
 
 		//Scanner that takes student age within 18-40
 		System.out.println("Student Age (18-40 for Simplicity) :"); 
@@ -44,25 +47,31 @@ public class Enrollment {
 				stuAge = scannerObj.nextInt();
 			}
 		}
+		System.out.println();
 
 		scannerObj.nextLine();
 
 		//Scanner that takes student major
 		System.out.println("Student Major:"); 
 		String stuMajor = scannerObj.nextLine();
+		System.out.println();
 
 		//Creates the Student object with given info
 		Student studentObj = new Student(stuID, stuName, stuAge, stuMajor);
 
 		//Saves the Student into a Hashmap with ID as their key
 		studentHashObj.put(stuID, studentObj);
+
+		System.out.println("\nStudent has been added");
 	}
 
 	//Function enrolls student into a course
 	void enrollStudent(){
+
 		//Scanner that takes student ID
 		System.out.println("Which Student? (Type ID)");
 		int stuID = scannerObj.nextInt();
+		System.out.println();
 
 		//Checks if Student ID is in Hashmap
 		stuID = checkStudentIDinHash(stuID);
@@ -76,6 +85,7 @@ public class Enrollment {
 		//Scanner that takes Course ID
 		System.out.println("Which Course to Enroll? (Type ID)");
 		int courID = scannerObj.nextInt();
+		System.out.println();
 
 		//Checks if CourseID is in Hash
 		courID = checkCourseIDinHash(courID);
@@ -114,6 +124,7 @@ public class Enrollment {
 		//Scanner takes student ID
 		System.out.println("Which Student? (Type ID)");
 		int stuID = scannerObj.nextInt();
+		System.out.println();
 
 		//Checks if Student ID is in Hash
 		stuID = checkStudentIDinHash(stuID);
@@ -151,26 +162,15 @@ public class Enrollment {
 			System.out.println("Student is not Enrolled in " + curCourse.courseName);
 			System.out.println("Returning to Menu...");
 		}
-
-		/* 
-		//Check if there are any students. if none, give error, and if so, remove student and from their list.
-		if(curCourse.enrolledStudents == 0){
-			System.out.println("Course has 0 Students \nCannot drop");
-		} else {
-			curCourse.removeCount();
-			System.out.println(curStudent.getName() + " has been dropped from");
-			System.out.println("Course ID: " + curCourse.getCourseID());
-			System.out.println("Course Name: " + curCourse.getCourseName());
-			curStudent.enrolledCourses.remove(curCourse.courseName);
-		}
-		*/
 	}
 
 	//Function that displays a specific student's details
 	void displayStudent(){
+		
 		//Scanner takes student ID
 		System.out.println("Which Student (Type ID)?");
 		int stuID = scannerObj.nextInt();
+		System.out.println();
 
 		//Checks if Student ID is in Hash
 		stuID = checkStudentIDinHash(stuID);
@@ -181,7 +181,9 @@ public class Enrollment {
 			return;
 		}
 
+		System.out.println();
 		System.out.println(studentHashObj.get(stuID).getStudentDetails());
+		System.out.println("Student details are being displayed");
 	}
 
 	//Function that displays all the students and their details
@@ -190,9 +192,10 @@ public class Enrollment {
 			System.out.println("No Students in System");
 		} else {
 			for(Student _students: studentHashObj.values()){
-			System.out.println(_students.getStudentDetails());
+				System.out.println(_students.getStudentDetails());
 			}
 		}
+		System.out.println("All student details are being displayed");
 	}
 
 	//Function to add course
@@ -200,6 +203,7 @@ public class Enrollment {
 		//Scanner takes course ID
 		System.out.println("Course ID (Four Digits & Zero cant be first):");
 		int courID = scannerObj.nextInt();
+		System.out.println();
 
 		//CHecks if ID is already in use or out of range
 		courID = checkCourseID_InUseAndRange(courID);
@@ -209,14 +213,17 @@ public class Enrollment {
 		//Scanner takes course name
 		System.out.println("Course Name:");
 		String courName = scannerObj.nextLine();
+		System.out.println();
 
 		//Scanner takes instructor name
 		System.out.println("Instructor Name:");
 		String courInstructor = scannerObj.nextLine();
+		System.out.println();
 	
 		//Scanner takes course capacity
 		System.out.println("Course Capacity (5-10 For Simplicity)");
 		int courCapacity = scannerObj.nextInt();
+		System.out.println();
 
 		//Condition to check course capacity
 		while(true){
@@ -229,12 +236,14 @@ public class Enrollment {
 			}
 		}
 
-		System.out.println("");
+		System.out.println();
 
 		//Creates a course object with the given values
 		Course courseObj = new Course(courID, courName, courInstructor, courCapacity, 0);
 		//Places the current course object into a hashmap with course ID as the key
 		courseHashObj.put(courID, courseObj);
+
+		System.out.println("Course has been added");
 	}
 
 	//COMPLETE
@@ -242,6 +251,7 @@ public class Enrollment {
 	void deleteCourse(){
 		System.out.println("Which Course to Delete? (Type ID)");
 		int courID = scannerObj.nextInt();
+		System.out.println();
 
 		//Checks if courID is in HashMap
 		courID = checkCourseIDinHash(courID);
@@ -258,19 +268,20 @@ public class Enrollment {
 		//Remove course from every student's list
 		//For each studentObject, get the value, indicating the curStudent, grab the enrolledCourses ArrayList, and remove the course that matches the courseName
 		for(HashMap.Entry<Integer, Student> eachCurStudent : studentHashObj.entrySet()){
-			eachCurStudent.getValue().enrolledCourses.remove(curCourse.courseName);
+			Student curStudent = eachCurStudent.getValue();
+			curStudent.enrolledCourses.remove(curCourse.courseName);
 		}
 
 		//In the courseHashObj, grab the removed course and its details to print into console, in addition to "actually" removing it. 
 		System.out.println(courseHashObj.remove(courID).getCourseDetails() + " has been removed");
 	}
 
-	//MAYBE COMPLETE
-	//Check ID Availability and Range
+	//Complete
 	void modifyCourse(){
 		System.out.println("Which Course to Modify? (Type ID)");
 		int courID = scannerObj.nextInt();
 		Course curCourse = courseHashObj.get(courID);
+		System.out.println();
 
 		//Checks if courID - the ID to modify - is in HashMap
 		courID = checkCourseIDinHash(courID); 
@@ -309,16 +320,19 @@ public class Enrollment {
 		scannerObj.nextLine();
 
 		//Scanner takes the new course name
-		System.out.println("Course Name: ");
+		System.out.println("New Course Name: ");
 		String changeCourName = scannerObj.nextLine();
+		System.out.println();
 
 		//Scanner takes the new instructor
-		System.out.println("Course Instructor: ");
+		System.out.println("New Course Instructor: ");
 		String changeCourInstructor = scannerObj.nextLine();
+		System.out.println();
 
 		//Scanner takes the new course capacity
-		System.out.println("Course Capacity: ");
+		System.out.println("New Course Capacity: ");
 		int changeCourCapacity = scannerObj.nextInt();
+		System.out.println();
 
 		//Check Course Capacity
 		while(true){
@@ -332,10 +346,22 @@ public class Enrollment {
 			break;
 			}
 		}
-		
+
+		//Loop through every student's enrolledCourse and change the name
+		for(HashMap.Entry<Integer, Student> eachCurStudent : studentHashObj.entrySet()){
+			Student curStudent = eachCurStudent.getValue(); //Grab each student and save it into a variable named curStudent
+			if(curStudent.enrolledCourses.contains(curCourse.courseName)){ //If student has the current course's name
+				int courseNameIndex = curStudent.enrolledCourses.indexOf(curCourse.courseName); //Grab the index of the course name
+
+				curStudent.enrolledCourses.set(courseNameIndex, changeCourName); //Change the course name to the new course name at the said index
+			}
+		}
+
 		//The setters to change the new information if everything passes
 		curCourse.setCourseName(changeCourName);
 		curCourse.setInstructor(changeCourInstructor);
+
+		System.out.println("Course has been modified");
 	}
 
 	//COMPLETE
@@ -343,6 +369,7 @@ public class Enrollment {
 		//Scanner takes the course ID
 		System.out.println("Which Course to Display? (Type ID)");
 		int courID = scannerObj.nextInt();
+		System.out.println();
 
 		//Function checks if Course ID is in hashmap
 		courID = checkCourseIDinHash(courID);
@@ -356,6 +383,8 @@ public class Enrollment {
 		//If course ID is available, go into the courseHashObj and grab the Course with the associated value. Then, print the details form the Course Object because of its associated function from the class - a generalized getter.
 		System.out.println(courseHashObj.get(courID).getCourseDetails());
 
+		System.out.println("Course details are being displayed");
+
 	}
 
 	//COMPLETE
@@ -364,6 +393,7 @@ public class Enrollment {
 		//Scanner takes course ID
 		System.out.println("Which Course to Check Availability? (Type ID)");
 		int courID = scannerObj.nextInt();
+		System.out.println();
 
 		//Checks if the course ID is in the hashmap
 		courID = checkCourseIDinHash(courID);
@@ -387,6 +417,8 @@ public class Enrollment {
 			System.out.println("Enrollment Status is Open");
 		}
 
+		System.out.println("Course enrollment status is being displayed");
+
 	}
 
 	//COMPLETE
@@ -401,7 +433,7 @@ public class Enrollment {
 		}
 	}
 
-	//MAYBE COMPLETE
+	//COMPLETE
 	void checkCurSchedule(){
 		System.out.println("Schedule with most students is prioritized and will begin sequentially with one hour apart after class ends. \nIf the course has the same amount of students, the schedule will be based on which is added onto the system first.");
 		if(courseHashObj.isEmpty()){
@@ -421,7 +453,7 @@ public class Enrollment {
 				System.out.println();
 			}
 		}
-
+		System.out.println("Schedule is being displayed");
 	}
 
 	//Checks if studentID is in System
