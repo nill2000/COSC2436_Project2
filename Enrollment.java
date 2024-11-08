@@ -39,15 +39,17 @@ public class Enrollment {
 		//Scanner that takes student age within 18-40
 		System.out.println("Student Age (18-40 for Simplicity) :"); 
 		int stuAge = scannerObj.nextInt();
+		System.out.println();
+
 		while(true){ //Condition statment checks if student age is within range
 			if (stuAge >= 18 & stuAge <= 40){
 				break;
 			} else {
-				System.out.println("Invalid Input. Student Age (18-40):");
+				System.out.println("Input out of range. Student Age (18-40):");
 				stuAge = scannerObj.nextInt();
+				System.out.println();
 			}
 		}
-		System.out.println();
 
 		scannerObj.nextLine();
 
@@ -456,6 +458,14 @@ public class Enrollment {
 		System.out.println("\nSchedule is being displayed");
 	}
 
+	/*
+	///////////////////////////////////////////////////////////////////////
+	
+	From this line, the following functions are used to make checking cases
+
+	////////////////////////////////////////////////////////////////////////
+	 */
+
 	//Checks if studentID is in System
 	int checkStudentIDinHash(int stuIDParams){
 		while(!studentHashObj.containsKey(stuIDParams)){ //Condition checks if the given student ID is in the student hashmap
@@ -465,6 +475,7 @@ public class Enrollment {
 			//Scanner asks for the student ID again
 			System.out.println("ID Doesn't Exist \nTry again or type -1 to Exit");
 			stuIDParams = scannerObj.nextInt();
+			System.out.println();
 		}
 		return stuIDParams;
 	}
@@ -478,6 +489,7 @@ public class Enrollment {
 			//Scanner asks the course ID again
 			System.out.println("ID Doesn't Exist \nTry again or type -1 to Exit");
 			courIDParams = scannerObj.nextInt();
+			System.out.println();
 		}
 		return courIDParams;
 	}
@@ -489,10 +501,12 @@ public class Enrollment {
 			System.out.println("ID is a dupe. Try Again");
 			System.out.println("Student ID (Zero Can't be First and Only 4 Digits): ");
 			stuIDParams = scannerObj.nextInt();	
+			System.out.println();
 		} else if (stuIDParams < 1000 || stuIDParams > 9999) { //If the student ID is not 4 digits, ask again
 			System.out.println("ID is out of range. Try Again");
 			System.out.println("Student ID (Zero Can't be First and Only 4 Digits): ");
 			stuIDParams = scannerObj.nextInt();	
+			System.out.println();
 		}
 		else { //If everything is successful, use the new ID for the student
 			return stuIDParams;
@@ -507,10 +521,12 @@ public class Enrollment {
 			System.out.println("ID is a dupe. Try Again");
 			System.out.println("Course ID (Zero Can't be First and Only 4 Digits): ");
 			courIDParams = scannerObj.nextInt();	
+			System.out.println();
 		} else if (courIDParams < 1000 || courIDParams > 9999){ //If the course hashmap contains the key, ask for a new course ID
 			System.out.println("ID is out of range. Try Again");
 			System.out.println("Course ID (Zero Can't be First and Only 4 Digits): ");
 			courIDParams = scannerObj.nextInt();	
+			System.out.println();
 		}
 		else { //If successful, use the new ID for the Course
 			return courIDParams;

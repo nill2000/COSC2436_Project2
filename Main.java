@@ -3,8 +3,8 @@
 //Nov 15 2024
 //COSC2436 Project 2
 
-/*
- 4. Format CLI better
+/* PROGRAM DESCRIPTION:
+The following program is a scheduling system that allows administrators to add, enroll, drop, and display students details. In addition, the system can add, delete, modify, and display course details. Lastly, the program makes the schedule based on the amount of students enrolled in a course with the more students starting before the less. 
  */
 
 import java.util.Scanner;
