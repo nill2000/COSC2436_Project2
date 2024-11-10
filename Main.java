@@ -27,9 +27,9 @@ public class Main{
 		System.out.println("11. Display All Students");
 		System.out.println("12. Display All Courses");
 		System.out.println("-1. Exit Program");
-		int menuChoice = scannerObj.nextInt();
+		int menuChoice = scannerObj.nextInt(); //Takes input for one of the menu choices
 
-		switch(menuChoice){
+		switch(menuChoice){ //Switch statement will call a function based on user's input
 			case -1:
 				System.out.println("Exiting Program");
 				System.exit(0);
@@ -81,7 +81,7 @@ public class Main{
 				System.out.println();
 				enrollmentObj.displayAllCourses();
 				break;
-			default:
+			default: //Exits the program if input is invalid
 				System.out.println("Invalid Input \nExiting Program");
 				System.exit(0);
 		}
@@ -91,8 +91,10 @@ public class Main{
 	public static void main(String[] args){
 		System.out.println("Main Class Success \n");
 
+
+		//Continuously runs the program forever unless user quits
 		Boolean Running = true;
-		while(Running){
+		while(Running){ 
 			System.out.println();
 			menuList();
 		}
