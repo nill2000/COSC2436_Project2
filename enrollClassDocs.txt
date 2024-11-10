@@ -1,0 +1,61 @@
+The following notes will explain the functions in the Enrollment class in a more concise manner.
+
+addStudent() - This function adds a student into the system
+The user will enter a student's ID, name, age, and major. In addition, to prevent invalid data, if statements have been used and a method to check dupes and range. 
+If everything is successful, the student object will be created with the given inputs and be placed in a HashMap with the student ID as the key and student object as the value.
+
+enrollStudent() - Function enrolls a student into a course
+The function will ask for the student's ID and check if it exists. If it exists, the program will ask which course the student
+will enroll. Similarly, the program will check if the course exists. Another check needed is to make sure if the student isn't already enrolled. 
+Lastly, the course needs to check if the capacity is full before enrolling. If everything passes, the student will enroll and the enrollment will increment by 1.
+When asking for the ID, it will run an infinite loop in case there are no ID's. So, typing -1 will exit the method and return back to
+the menu.
+
+dropStudent() - Function drops the student from course
+Function will ask the user for the student's ID and check if it's available and ask which course to drop from - also checking if it's available. Lastly, 
+function needs to check if student is enrolled in the course. If so, decrement enrollment count by 1 and the student details will be updated. If not, do nothing.
+When asking for the ID, it will run an infinite loop in case there are no ID's. So, typing -1 will exit the method and return back to
+the menu.
+
+displayStudent() - Displays a "specific" student's details
+Function asks user for a student's ID. If it exists, print the said student's details. If not, do nothing. 
+When asking for the ID, it will run an infinite loop in case there are no ID's. So, typing -1 will exit the method and return back to
+the menu.
+
+addCourse() - Adds a course into the system
+Function will ask user for course's ID, name, instructor, and capacity. Before using the ID, function checks if ID is a dupe or within range. 
+In addition, to make sure capacity is within range, the while loop is used and will break if the if-statement is false. If everything passes,
+function will create a course object will the given details and be placed into a hashmap with the course ID as the key and course object as the value.
+
+deleteCourse() - Deletes a course from the system
+Function will ask user for ID and check if it's available. If available, function will return the the course object from the hashmap
+with the associated key. Then, a loop will go through every student object and remove the course from their details. 
+When asking for the ID, it will run an infinite loop in case there are no ID's. So, typing -1 will exit the method and return back to
+the menu.
+
+displayCourse() - Displays a "specific" course
+Function will ask user for the course ID and check if it exists. If so, function will print the course details with the
+associated key. If not, do nothing. 
+When asking for the ID, it will run an infinite loop in case there are no ID's. So, typing -1 will exit the method and return back to
+the menu.
+
+displayEnrollStatus() - Displays the enrollment status of a course
+Function will ask user for course ID. If it exists, grab the course object with the associated key
+and check if enrolledStudents equals the capacity. If so, enrollment is closed, but if not, enrollment is open.
+When asking for the ID, it will run an infinite loop in case there are no ID's. So, typing -1 will exit the method and return back to
+the menu.
+
+modifyCourse() - Allows to modify details of a course
+Function asks user for course ID and check if it exists. If so, the following questions will involve what details to change. If no change, type the same info. 
+Other checks are ensured. Before changing capacity, function checks if the new capacity is less than the enrolled students. If so, do not change and ask again.
+In addition, the program will need to loop the student object's enrolled courses and change the course name. After everything passes, the new course is made by using setters.
+When asking for the ID, it will run an infinite loop in case there are no ID's. So, typing -1 will exit the method and return back to
+the menu.
+
+checkCurSchedule() - Shows the schedule of courses occuring in order
+Code checks if any courses exists. If so, function will first clear the pq in case the function has already been called to prevent dupes. Then loop through the courses Objects
+in the course hashmap and add the courses to the pq based on the comparator - the amount of students. Lastly, loop through the pq and return every course in pq order.
+
+displayAllStudents()/displayAllCourses() - Displays details for every student/course
+Both function check if there are any student/courses available. If so, loop their respective hashmaps and print their respective
+details by using a generalized getter.
