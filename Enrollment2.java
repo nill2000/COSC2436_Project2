@@ -297,7 +297,7 @@ public class Enrollment2 {
 		//Make sure courseIDs do not match one another
 		//If change capacity, check enrolled students first
 		System.out.println("If no change, type the same info\n");
-		System.out.println("Course ID: \n");
+		System.out.println("Course ID:");
 		int changeCourID = scannerObj.nextInt();
 
 		//Check ID Availability
@@ -311,7 +311,7 @@ public class Enrollment2 {
 			changeCourID = scannerObj.nextInt();
 		}
 		else { //If this statement is reached, the ID will change
-			System.out.println("ID has been Changed");
+			System.out.println("ID has been Changed\n");
 			courseHashObj.put(changeCourID, curCourse); //Create a hash with the same course but new ID
 			curCourse.setCourseID(changeCourID); //Use a setter to change the course ID
 			courseHashObj.remove(courID); //Remove the hash with the old ID
@@ -352,13 +352,10 @@ public class Enrollment2 {
 		//Loop through every student's enrolledCourse and change the name
 		for(HashMap.Entry<Integer, Student2> eachCurStudent : studentHashObj.entrySet()){
 			Student2 curStudent = eachCurStudent.getValue(); //Grab each student and save it into a variable named curStudent
-			if(curStudent.enrolledCoursesHash.containsKey(curCourse.courseID)){ //If student has the current course's name
+			if(curStudent.enrolledCoursesHash.containsKey(courID)){ //If student has the old ID
+				curStudent.enrolledCoursesHash.remove(courID); //Remove the course with old ID
+				curStudent.enrolledCoursesHash.put(changeCourID, changeCourName); //Add the course with the new ID
 
-				curStudent.enrolledCoursesHash.put(changeCourID, changeCourName);
-
-				// int courseNameIndex = curStudent.enrolledCoursesHash.indexOf(curCourse.courseName); //Grab the index of the course name
-
-				// curStudent.enrolledCoursesHash.set(courseNameIndex, changeCourName); //Change the course name to the new course name at the said index
 			}
 		}
 
